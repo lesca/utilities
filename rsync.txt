@@ -1,0 +1,6 @@
+
+## rsync
+# test
+rsync -avP --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
+# backup
+rsync -avP --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
