@@ -1,0 +1,14 @@
+
+## Best Practise for robocopy
+
+# /z ensures Robocopy can resume the transfer of a large file in mid-file instead of restarting
+robocopy \\netshare\h$ Y:\Portable /mir /sec /z /r:10 /w:10 /log:D:\Portable_Transfer.log
+
+# Without /zb can speed up transfer
+robocopy \\netshare\f$\ISO D:\ISO /mir  /r:10 /w:10 /eta /tee /unilog:D:\ISO.log
+
+# Exclude directories
+robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\%time%.log /xd "System Volume Information" "$RECYCLE.BIN"
+
+# Exclude directories and files
+robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\%time%.log /xd "System Volume Information" "$RECYCLE.BIN" /xf ".DS_Store"
