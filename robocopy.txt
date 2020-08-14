@@ -8,7 +8,7 @@ robocopy \\netshare\h$ Y:\Portable /mir /sec /z /r:10 /w:10 /log:D:\Portable_Tra
 robocopy \\netshare\f$\ISO D:\ISO /mir  /r:10 /w:10 /eta /tee /unilog:D:\ISO.log
 
 # Exclude directories
-robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\%time%.log /xd "System Volume Information" "$RECYCLE.BIN"
+robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\robocopy-%random%.log /xd "System Volume Information" "$RECYCLE.BIN"
 
 # Exclude directories and files
-robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\%time%.log /xd "System Volume Information" "$RECYCLE.BIN" /xf ".DS_Store"
+robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\robocopy-%random%.log /xd "System Volume Information" "$RECYCLE.BIN" /xf ".DS_Store"
