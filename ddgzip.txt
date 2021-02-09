@@ -1,0 +1,12 @@
+# Backup
+sudo dd bs=16m if=/dev/disk2 | gzip > rasp.img.gz
+
+# Restore
+gzip -c rasp.img.gz | sudo dd bs=16m of=/dev/disk2
+
+# Optional for tar
+tar xzOf ChromeOS-Flow.tar.gz | dd bs=16m of=/dev/disk2
+
+
+## Check progress
+SIGINFO => CTRL-T
