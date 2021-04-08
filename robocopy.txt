@@ -14,4 +14,4 @@ robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\robocopy-%rand
 robocopy D:\ G:\DriveD\ /mir /r:10 /w:10 /eta /tee /unilog:%temp%\robocopy-%random%.log /xd "System Volume Information" "$RECYCLE.BIN" /xf ".DS_Store"
 
 # Working version
-robocopy \\192.168.2.12\homes\ D:\homes\ /mir /z /r:10 /w:10 /eta /tee /log:C:\trans.log /xd "System Volume Information" "$RECYCLE.BIN" "@eaDir" /xf ".DS_Store"
+robocopy \\192.168.2.12\homes\ D:\homes\ /mir /r:10 /w:10 /eta /tee /log:C:\trans.log /xd "System Volume Information" "$RECYCLE.BIN" "@eaDir" /xf ".DS_Store"
