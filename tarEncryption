@@ -1,0 +1,15 @@
+# scripts to easily run gpgtar to encrypt / decrypt directories 
+
+# passfile 
+# a file containing **one-line** passphrase
+# put this file at the working directory where you run the command
+
+# openssl - better performace
+sslen() { tar -c $1 | openssl enc -aes-256-cbc -pass file:passfile | split -a3 -d -b 2G - `basename $1`.part ; }
+sslde() { mkdir decrypted ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar -xC decrypted ; }
+
+# gpg - lower performance
+gpgen() { tar -c $1 | gpg -c --passphrase-file=passfile --batch -o - | split -a3 -d -b 2G - `basename $1`.part ; }
+gpgde() { mkdir decrypted ; cat $1* | gpg -d --passphrase-file=passfile --batch -o - | tar -xC decrypted ; }
+
+
