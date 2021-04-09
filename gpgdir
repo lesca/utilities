@@ -7,3 +7,5 @@
 gpgen() { gpgtar -c --gpg-args="--passphrase-file=passfile --batch" -o `basename $1`.gpg $1 ; }
 gpgde() { gpgtar -d --gpg-args="--passphrase-file=passfile --batch" $1 ; }
 gpgll() { gpgtar -t --gpg-args="--passphrase-file=passfile --batch" $1 ; }
+
+
