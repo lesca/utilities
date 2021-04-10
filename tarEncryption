@@ -5,8 +5,8 @@
 # put this file at the working directory where you run the command
 
 # openssl - better performace
-sslen() { mkdir encrypted ; tar -c $1 | openssl enc -aes-256-cbc -pass file:passfile | split -a3 -d -b 2G - encrypted/`basename $1`.part ; }
-sslde() { mkdir decrypted ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar -xC decrypted ; }
+sslen() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar -c $1 | openssl enc -aes-256-cbc -pass file:passfile | split -a3 -d -b 2G - $des/`basename $1`.part ; }
+sslde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar -xC $des ; }
 
 # gpg - lower performance
 gpgen() { mkdir encrypted ; tar -c $1 | gpg -c --passphrase-file=passfile --batch -o - | split -a3 -d -b 2G - encrypted/`basename $1`.part ; }
