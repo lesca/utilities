@@ -9,8 +9,8 @@ sslen() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar -c $1 |
 sslde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar -xC $des ; }
 
 # recursively encrypt / decrypt a directory 
-diren() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; for f in $(find ./$1/); do ([ -f $f ] && echo $f && openssl enc -aes-256-cbc -file pass:passfile -in "$f" > "$des/$f" 2>/dev/null ) || ([ -d "$f" ] && mkdir -p "$des/$f") ; done }
-dirde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; for f in $(find ./$1/); do ([ -f $f ] && echo $f && openssl enc -d -aes-256-cbc -file pass:passfile -in "$f" > "$des/$f" 2>/dev/null ) || ([ -d "$f" ] && mkdir -p "$des/$f") ; done }
+diren() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; for f in $(find ./$1/); do ([ -f $f ] && echo $f && openssl enc -aes-256-cbc -file file:passfile -in "$f" > "$des/$f" 2>/dev/null ) || ([ -d "$f" ] && mkdir -p "$des/$f") ; done }
+dirde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; for f in $(find ./$1/); do ([ -f $f ] && echo $f && openssl enc -d -aes-256-cbc -file file:passfile -in "$f" > "$des/$f" 2>/dev/null ) || ([ -d "$f" ] && mkdir -p "$des/$f") ; done }
 
 # gpg - lower performance
 gpgen() { mkdir encrypted ; tar -c $1 | gpg -c --passphrase-file=passfile --batch -o - | split -a3 -d -b 2G - encrypted/`basename $1`.part ; }
