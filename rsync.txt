@@ -8,3 +8,9 @@ rsync -avP --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.
 
 # backup with progress and report (--stats option)
 rsync -avP --stats --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
+
+# mirror (delete destination files when src missing)
+rsync -avP --stats --del --exclude '@eaDir' --exclude '.DS_Store' user@192.168.2.xx::homes/ homes/
+
+# mirror and disable delta transfer (-W)
+rsync -avPW --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
