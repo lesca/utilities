@@ -1,16 +1,28 @@
 
 ## rsync
 # test (-n option)
-rsync -avn --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
+rsync -avn user@192.168.x.x:/volume1/homes/ homes/
 
-# backup with progress (-P option)
-rsync -avP --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
+# backup with progress (--progress option)
+rsync -av --progress user@192.168.x.x:/volume1/homes/ homes/
 
 # backup with progress and report (--stats option)
-rsync -avP --stats --exclude '@eaDir' --exclude '.DS_Store' --exclude 'switch' user@192.168.x.x:/volume1/homes/ .
+rsync -av --progress --stats user@192.168.x.x:/volume1/homes/ homes/
 
 # mirror (delete destination files when src missing)
-rsync -avP --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
+rsync -av --progress --stats --del user@192.168.2.xx::homes/ homes/
 
-# mirror and disable delta transfer (-W)
-rsync -avPW --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
+# mirror and show item change flags (-i, --itemize-changes)
+rsync -avi --progress --stats --del user@192.168.2.xx::homes/ homes/
+
+# mirror and human readable (-h)
+rsync -avih --progress --stats --del user@192.168.2.xx::homes/ homes/
+
+# mirror and disable delta transfer (-W, --whole-file)
+rsync -avW --stats --del user@192.168.2.xx::homes/ homes/
+
+# mirror and force updating all files (-I, --ignore-times)
+rsync -avI --stats --del user@192.168.2.xx::homes/ homes/
+
+# my favourite - mirror and exclude dirs
+rsync -avih --progress --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
