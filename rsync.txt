@@ -26,3 +26,6 @@ rsync -avI --stats --del user@192.168.2.xx::homes/ homes/
 
 # my favourite - mirror and exclude dirs
 rsync -avih --progress --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
+
+# better performance
+rsync -avihW --progress --compress-level=0 --stats --del --exclude '@eaDir' --exclude '.DS_Store' --exclude 'Downloads' user@192.168.2.xx::homes/ homes/
