@@ -7,8 +7,8 @@
 # openssl version - better performace tan gpg
 
 # encrypt a specified directory to tar file and split into 2GB in size
-sslen() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar -c $1 | openssl enc -aes-256-cbc -pass file:passfile | split -a3 -d -b 2G - $des/`basename $1`.part ; }
-sslde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar -xC $des ; }
+sslen() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar --checkpoint=100000 --checkpoint-action=echo="#%u: %T" -c $1 | openssl enc -aes-256-cbc -pass file:passfile | split -a3 -d -b 2G - $des/`basename $1`.part ; }
+sslde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; cat $1* | openssl enc -aes-256-cbc -d -pass file:passfile | tar --checkpoint=100000 --checkpoint-action=echo="#%u: %T" -xC $des ; }
 
 # openssl version2 - with *rar* and 5% *recovery records* to provide reliable backup
 sslen2() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar -c $1 | openssl enc -aes-256-cbc -pass file:passfile | rar a -v2097152k -rr5 -m0 -siencrypted $des/`basename $1` ; }
