@@ -1,3 +1,6 @@
+## not maintained in this file anymore 
+## find bashrc for most up to date tools
+
 # scripts to easily run gpgtar to encrypt / decrypt directories 
 
 # passfile
