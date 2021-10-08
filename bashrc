@@ -11,13 +11,5 @@ dirde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; find ./$1/ 
 # to send: tar -c . | nc ip 9999
 tarncr() { [ "$1" = "" ] && port=9999 || port=$1 ; nc -dN -l $port | tar --checkpoint=100000 --checkpoint-action=echo="#%u: %T" -xf - ; }
 
-# tarpv - tar copy dir with pv progress locally
-# usage: tarpv srcDir [des]
-tarpv() { [ "$2" = "" ] && des=tarpv-$(date +%F-%H%M%S) || des=$2 ; mkdir -p $des ; tar -c $1 | pv | tar -x -C $des ; }
-
-# tarcp - tar copy dir to the remote side
-# usage: tarcp src ip:dest/
-tarcp() { [ "$2" = "" ] && echo tarcp src ip:dest && return || src=$1 && ip=$(echo $2 | cut -d: -f1) && dest=$(echo $2 | cut -d: -f2) ; echo $ip:$dest ; tar -cvSf - $src --totals=USR1 --checkpoint=100000 --checkpoint-action=echo="#%u: %T" | ssh -T -c aes128-gcm@openssh.com -o Compression=no -x $ip "(mkdir -p $dest ; tar -xf - -C $dest)" ; }
-
 # genMp4 - for radioRec.py results
 genMp4() { ffmpeg -i $1.wav -shortest -filter_complex "[0:a]showspectrum=s=800x500:mode=separate:color=intensity:slide=rscroll[v1];color=c=green:s=1920x1080[v2];[v2][v1]overlay=y=(H-h)/2:x=(W-w)/2,subtitles=$1.srt:force_style='Alignment=6'[v]" -map "[v]" -c:v libx264 -pix_fmt yuv420p -preset superfast -map 0:a -c:a aac ham.mp4 ; }
