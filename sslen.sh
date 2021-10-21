@@ -1,5 +1,5 @@
 
-# passfile
+# .passfile
 # a file containing **one-line** passphrase
 # put this file at the $HOME directory 
 
