@@ -1,11 +1,7 @@
-## not maintained in this file anymore 
-## find bashrc for most up to date tools
-
-# scripts to easily run gpgtar to encrypt / decrypt directories 
 
 # passfile
 # a file containing **one-line** passphrase
-# put this file at the working directory where you run the command
+# put this file at the $HOME directory 
 
 # encrypt a specified directory to tar file and split into 2GB in size
 sslen() { [ "$2" = "" ] && des=encrypted || des=$2 ; mkdir -p $des ; tar --checkpoint=100000 --checkpoint-action=echo="#%u: %T" -c $1 | openssl enc -aes-256-cbc -pass file:$HOME/.passfile | split -a3 -d -b 2G - $des/`basename $1`.part ; }
