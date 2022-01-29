@@ -8,7 +8,6 @@ dirde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; find ./$1/ 
 
 # tarncr - receiver side
 # usage: tarncr [port]
-# to send: tar -c . | nc ip 9999
 tarncr() { [ "$1" = "" ] && port=9000 || port=$1 ; echo "sender: tar -czvf - . | nc host $port" ; nc -N -l $port | pv | gzip > tarncr-$(date +%Y-%m-%d-%H%M%S).tar.gz ; }
 
 # genMp4 - for radioRec.py results
