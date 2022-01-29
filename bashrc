@@ -8,7 +8,7 @@ dirde() { [ "$2" = "" ] && des=decrypted || des=$2 ; mkdir -p $des ; find ./$1/ 
 
 # tarncr - receiver side
 # usage: tarncr [port]
-tarncr() { [ "$1" = "" ] && port=9000 || port=$1 ; echo "sender: tar -czvf - . | nc host $port" ; nc -N -l $port | pv | gzip > tarncr-$(date +%Y-%m-%d-%H%M%S).tar.gz ; }
+tarncr() { [ "$1" = "" ] && port=9000 || port=$1 ; echo "sender: tar -czvf - . | nc host $port" ; nc -N -l $port | (pv > tarncr-$(date +%Y-%m-%d-%H%M%S).tar.gz) ; }
 
 # genMp4 - for radioRec.py results
 genMp4() { ffmpeg -i $1.wav -shortest -filter_complex "[0:a]showspectrum=s=800x500:mode=separate:color=intensity:slide=rscroll[v1];color=c=green:s=1920x1080[v2];[v2][v1]overlay=y=(H-h)/2:x=(W-w)/2,subtitles=$1.srt:force_style='Alignment=6'[v]" -map "[v]" -c:v libx264 -pix_fmt yuv420p -preset superfast -map 0:a -c:a aac ham.mp4 ; }
