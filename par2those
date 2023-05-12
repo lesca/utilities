@@ -1,0 +1,36 @@
+#!/bin/bash
+startTime=$(date '+%Y-%m-%d %H:%M:%S')
+cwd=$(pwd)
+echo Current Directory = $cwd
+
+[ "$1" != "" ] && name=$1 || name=$(basename $cwd)
+
+num=$(ls -lAh $name* | grep -v "^d" | wc -l)
+[ "$num" -eq 0 ] && echo "Info: No files found. Exit." && exit
+[ "$num" -lt 3 ] && rate=10 || rate=$((100/$num+1))
+[ "$rate" -lt "2" ] && rate=2 
+echo "Prefix: $name"
+echo "Total files: $num "
+echo "Rate: $rate"
+
+# create 
+cmd="par2 c -r$rate -T2 -n3 -u -m1024 par2-$name.par2 $name*"
+echo "Command: $cmd"
+read -p "Continue ? [Y/n] " -e confirm
+[ "$confirm" == "" ] || [ "$confirm" == "y" ] || [ "$confirm" == "Y" ] && $cmd || exit
+
+# move
+echo "Moving files to par2/"
+mkdir -p par2
+mv par2-$name* par2/
+echo "Done."
+
+# report
+endTime=$(date '+%Y-%m-%d %H:%M:%S')
+echo
+echo "Start time: $startTime"
+echo "End time: $endTime"
+startTime=$(date -d "${startTime}" +%s)
+endTime=$(date -d "${endTime}" +%s)
+runTime=$((endTime-startTime))
+echo "Run time: ${runTime} seconds" 
